@@ -27,7 +27,7 @@ public class App {
 
     private static void downloadSutra(String startUrl) throws IOException {
         for (var currentUrl = startUrl; currentUrl != null; ) {
-            var doc = Jsoup.connect(startUrl).get();
+            var doc = Jsoup.connect(currentUrl).get();
             var nextUrl = getNextUrl(doc);
             cleanPage(doc);
             save(doc);
@@ -72,6 +72,15 @@ public class App {
         doc.getElementsByClass("style157")
             .remove();
 
+        //remove any remaining next page buttons
+        doc.select("p:contains(next)")
+            .remove();
+        //remove any remaining next page buttons
+        doc.select("p:contains(return to top)")
+            .remove();
+        //remove any remaining next page buttons
+        doc.select("p:contains(contents)")
+            .remove();
     }
 
     private static void save(Document doc) throws IOException {
