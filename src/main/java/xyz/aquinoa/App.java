@@ -72,6 +72,14 @@ public class App {
         doc.getElementsByClass("style157")
             .remove();
 
+        //remove capitalized beginning letters
+        doc.getElementsByClass("style6")
+            .removeAttr("class");
+        doc.getElementsByClass("style9")
+            .removeAttr("class");
+        doc.getElementsByClass("style23")
+            .removeAttr("class");
+
         //remove page numbers (shurangama)
         doc.getElementsByClass("style206")
             .remove();
