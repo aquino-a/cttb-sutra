@@ -72,6 +72,10 @@ public class App {
         doc.getElementsByClass("style157")
             .remove();
 
+        //remove page numbers (shurangama)
+        doc.getElementsByClass("style206")
+            .remove();
+
         //remove any remaining next page buttons
         doc.select("p:contains(next)")
             .remove();
@@ -89,6 +93,7 @@ public class App {
         if (match.find()) {
             var fileName = match.group(0);
             Files.write(Path.of(fileName), doc.html().getBytes());
+            System.out.println(String.format("downloaded: %s", fileName));
         }
     }
 }
