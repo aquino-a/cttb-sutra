@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  * Download and save sutra pages from cttb.
  */
 public class App {
-    private static final Pattern FILE_PATTERN = Pattern.compile("[A-Za-z0-9_\\.]+\\.html$");
+    private static final Pattern FILE_PATTERN = Pattern.compile("[A-Za-z0-9_\\.]+\\.html?$");
 
     public static void main(String[] args) throws IOException {
         if (args.length < 1) {
@@ -98,10 +98,13 @@ public class App {
     private static void save(Document doc) throws IOException {
         var htmlPath = doc.connection().response().url().getFile();
         var match = FILE_PATTERN.matcher(htmlPath);
-        if (match.find()) {
-            var fileName = match.group(0);
-            Files.write(Path.of(fileName), doc.html().getBytes());
-            System.out.println(String.format("downloaded: %s", fileName));
+        if (!match.find()) {
+            System.out.println(String.format("No file name match found: %s", htmlPath));
+            return;
         }
+
+        var fileName = match.group(0);
+        Files.write(Path.of(fileName), doc.html().getBytes());
+        System.out.println(String.format("downloaded: %s", fileName));
     }
 }
